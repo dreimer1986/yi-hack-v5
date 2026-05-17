@@ -22,7 +22,7 @@ if [ "$VAL" == "info" ] ; then
     printf "Content-type: application/json\r\n\r\n"
 
     FW_VERSION=`cat /tmp/sd/yi-hack-v5/version`
-    LATEST_FW=`wget -O - https://api.github.com/repos/pawelma/yi-hack-v5/releases/latest 2>&1 | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/'`
+    LATEST_FW=`wget -O - https://api.github.com/repos/pawelma/yi-hack-v5-slim/releases/latest 2>&1 | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/'`
     PRERELEASE_FW=`wget -O - https://api.github.com/repos/pawelma/yi-hack-v5/releases 2>&1 | grep -B 4 '"prerelease": true' | awk -F '"' '{print $4; exit}'`
 	
     printf "{\n"
