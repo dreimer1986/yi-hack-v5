@@ -5,7 +5,6 @@
 YI_HACK_PREFIX="/tmp/sd/yi-hack-v5"
 MODEL_SUFFIX=`cat /home/app/.camver`
 FW_VERSION=`cat /tmp/sd/yi-hack-v5/version`
-BASELINE_VERSION=`cat /home/yi-hack-v5/version`
 
 export PATH=/usr/bin:/usr/sbin:/bin:/sbin:/home/base/tools:/home/app/localbin:/home/base:/tmp/sd/yi-hack-v5/bin:/tmp/sd/yi-hack-v5/sbin:/tmp/sd/yi-hack-v5/usr/bin:/tmp/sd/yi-hack-v5/usr/sbin
 export LD_LIBRARY_PATH=/lib:/usr/lib:/home/lib:/home/qigan/lib:/home/app/locallib:/tmp/sd:/tmp/sd/gdb:/tmp/sd/yi-hack-v5/lib
@@ -22,8 +21,8 @@ if [ "$VAL" == "info" ] ; then
     printf "Content-type: application/json\r\n\r\n"
 
     FW_VERSION=`cat /tmp/sd/yi-hack-v5/version`
-    LATEST_FW=`wget -O - https://api.github.com/repos/alienatedsec/yi-hack-v5/releases/latest 2>&1 | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/'`
-    PRERELEASE_FW=`wget -O - https://api.github.com/repos/alienatedsec/yi-hack-v5/releases 2>&1 | grep -B 4 '"prerelease": true' | awk -F '"' '{print $4; exit}'`
+    LATEST_FW=`wget -O - https://api.github.com/repos/pawelma/yi-hack-v5-slim/releases/latest 2>&1 | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/'`
+    PRERELEASE_FW=`wget -O - https://api.github.com/repos/pawelma/yi-hack-v5-slim/releases 2>&1 | grep -B 4 '"prerelease": true' | awk -F '"' '{print $4; exit}'`
 	
     printf "{\n"
     printf "\"%s\":\"%s\",\n" "fw_version"       "$FW_VERSION"
@@ -62,18 +61,14 @@ elif [ "$VAL" == "upgrade" ] ; then
 #        mv /tmp/sd/${MODEL_SUFFIX}_x.x.x.tgz /tmp/sd/${MODEL_SUFFIX}/${MODEL_SUFFIX}_x.x.x.tgz
         LATEST_FW="x.x.x"
     else
-        LATEST_FW=`wget -O -  https://api.github.com/repos/alienatedsec/yi-hack-v5/releases/latest 2>&1 | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/'`
+        LATEST_FW=`wget -O -  https://api.github.com/repos/pawelma/yi-hack-v5-slim/releases/latest 2>&1 | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/'`
         if [ "$FW_VERSION" == "$LATEST_FW" ]; then
             printf "Content-type: text/html\r\n\r\n"
             printf "No new firmware available."
             exit
-        elif [ "$BASELINE_VERSION" != "0.4.1" ]; then
-            printf "Content-type: text/html\r\n\r\n"
-            printf "Wrong baseline version"
-            exit
         fi
         
-        wget https://github.com/alienatedsec/yi-hack-v5/releases/download/$LATEST_FW/${MODEL_SUFFIX}_${LATEST_FW}.tgz
+        wget https://github.com/pawelma/yi-hack-v5-slim/releases/download/$LATEST_FW/${MODEL_SUFFIX}_${LATEST_FW}.tgz
         
         if [ ! -f ${MODEL_SUFFIX}_${LATEST_FW}.tgz ]; then
             printf "Content-type: text/html\r\n\r\n"
@@ -134,18 +129,14 @@ elif [ "$VAL" == "preupgrade" ] ; then
 #        mv /tmp/sd/${MODEL_SUFFIX}_x.x.x.tgz /tmp/sd/${MODEL_SUFFIX}/${MODEL_SUFFIX}_x.x.x.tgz
         PRERELEASE_FW="x.x.x"
     else
-        PRERELEASE_FW=`wget -O - https://api.github.com/repos/alienatedsec/yi-hack-v5/releases 2>&1 | grep -B 4 '"prerelease": true' | awk -F '"' '{print $4; exit}'`
+        PRERELEASE_FW=`wget -O - https://api.github.com/repos/pawelma/yi-hack-v5-slim/releases 2>&1 | grep -B 4 '"prerelease": true' | awk -F '"' '{print $4; exit}'`
         if [ "$FW_VERSION" == "$PRERELEASE_FW" ]; then
             printf "Content-type: text/html\r\n\r\n"
             printf "No new firmware available."
             exit
-        elif [ "$BASELINE_VERSION" != "0.4.1" ]; then
-            printf "Content-type: text/html\r\n\r\n"
-            printf "Wrong baseline version"
-            exit
         fi
 
-        wget https://github.com/alienatedsec/yi-hack-v5/releases/download/$PRERELEASE_FW/${MODEL_SUFFIX}_${PRERELEASE_FW}.tgz
+        wget https://github.com/pawelma/yi-hack-v5-slim/releases/download/$PRERELEASE_FW/${MODEL_SUFFIX}_${PRERELEASE_FW}.tgz
         
         if [ ! -f ${MODEL_SUFFIX}_${PRERELEASE_FW}.tgz ]; then
             printf "Content-type: text/html\r\n\r\n"
