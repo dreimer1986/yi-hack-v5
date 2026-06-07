@@ -35,7 +35,7 @@ on:
 
 env:
   UPSTREAM_REPO: dreimer1986/yi-hack-v5
-  UPSTREAM_TAG: '0.5.2'
+  UPSTREAM_TAG: '0.4.3'
   TOOLCHAIN_PATH: /opt/arm-hisiv300-linux
   # Docker Hub image containing the HiSilicon arm-hisiv300-linux cross-compiler
   TOOLCHAIN_IMAGE: stoneshen/arm-hisiv300-linux
