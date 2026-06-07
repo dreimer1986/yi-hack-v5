@@ -34,8 +34,8 @@ on:
           - 'false'
 
 env:
-  UPSTREAM_REPO: alienatedsec/yi-hack-v5
-  UPSTREAM_TAG: '0.4.1'
+  UPSTREAM_REPO: dreimer1986/yi-hack-v5
+  UPSTREAM_TAG: '0.5.2'
   TOOLCHAIN_PATH: /opt/arm-hisiv300-linux
   # Docker Hub image containing the HiSilicon arm-hisiv300-linux cross-compiler
   TOOLCHAIN_IMAGE: stoneshen/arm-hisiv300-linux
@@ -56,6 +56,7 @@ jobs:
         run: |
           # Full (unshallow) clone of submodules is required because some
           # upstreams (git.busybox.net) reject shallow fetches of specific commits
+          git config --global http.sslVerify "false"
           git submodule update --init --recursive
 
       - name: Install build dependencies
